@@ -9,11 +9,12 @@
 * Max: seta todos os módulos para 7
 * Onda: seta uma sequência binária que percorre um a um os módulos da direita para esquerda
 * Onda inversa: executa onda da esquerda para a direita
+* Onda com parâmetros: permite definir maginituded máxima e período
 * Entrada personalizada: seta um determinado módulo 
 
 ### Funcionalidades em implementação
 
-* Onda com parâmetros: permite definir maginituded máxima e período
+* Editor de padrões
 
 ### Funcionalidades para implementar
 
@@ -21,7 +22,6 @@
   * A definir como será o controle
 * Teste de ajuste de sensibilidade
 * Contador de tempo de execução, e quanto tempo falta para o fim
-* Editor de padrões
 
 ## Para inicializar o projeto
 
