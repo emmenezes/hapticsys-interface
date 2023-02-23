@@ -14,55 +14,66 @@ import {
   Image,
 } from '@chakra-ui/react';
 
-const defaultHeader = {
-  'Content-type': 'application/json; charset=UTF-8',
-};
+import { useRequests } from '../services/useRequests';
+import { useInputGenerator } from '../utils/useInputGenerator';
 
 function CustomInputTab() {
+  const { sendInput } = useRequests();
+  const { setOneModule } = useInputGenerator();
+  
   const [module, setModule] = useState(0);
   const [magnitude, setMagnitude] = useState(0);
 
-  const postCustomInput = () => {
-    let input = ['0','0','0','0','0','0','0','0','0','0','0','0'];
-    input[module] = magnitude;
-    fetch('/custominput', {
-      method: 'POST',
-      body: JSON.stringify({
-        input: input.join(''),
-      }),
-      headers: defaultHeader,
-    })
-      .then((response) => response.json())
-      .then((message) => {
-        console.log(message);
-      });
-  };
+  function setCustomInput() {
+    sendInput(setOneModule(module, magnitude));
+  }
 
   return (
     <VStack w="full" p={10}>
-      <Heading size="lg" mb={3}>Entrada personalizada</Heading>
+      -
+      <Heading size="lg" mb={3}>
+        Entrada personalizada
+      </Heading>
       <HStack w="full" justifyContent="center">
         <FormControl>
-          <FormLabel>Módulo 1</FormLabel>
-          <NumberInput maxW='200px' max={11} min={0} onChange={setModule}>
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
+          <HStack>
+            <FormLabel>Módulo</FormLabel>
+            <NumberInput
+              w="100px"
+              max={11}
+              min={0}
+              defaultValue={0}
+              onChange={setModule}
+            >
+              <NumberInputField />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+          </HStack>
         </FormControl>
         <FormControl>
-          <FormLabel>Intensidade</FormLabel>
-          <NumberInput maxW='200px' max={7} min={0} onChange={setMagnitude}>
-            <NumberInputField />
-            <NumberInputStepper>
-              <NumberIncrementStepper />
-              <NumberDecrementStepper />
-            </NumberInputStepper>
-          </NumberInput>
+          <HStack>
+            <FormLabel>Intensidade</FormLabel>
+            <NumberInput
+              w="100px"
+              max={7}
+              min={0}
+              defaultValue={0}
+              onChange={setMagnitude}
+            >
+              <NumberInputField />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+          </HStack>
         </FormControl>
-        <Button onClick={postCustomInput} size="lg" >Enviar</Button>
+        <Button onClick={setCustomInput} size="lg">
+          Enviar
+        </Button>
       </HStack>
       <Image p={10} src="location.png" />
     </VStack>
