@@ -9,9 +9,9 @@ export function useInputGenerator() {
 
   /**
    * Set all modules to the same magnitude
-   * 
+   *
    * @param magnitude
-  */
+   */
   function setAllModules(magnitude) {
     let input = [];
     for (let i = 0; i < 12; i++) {
@@ -21,11 +21,23 @@ export function useInputGenerator() {
   }
 
   /**
-   * Create wave sequence
+   * Set one module to specific magnitudde
    * 
+   * @param module selected actuator
+   * @param magnitude intesity
+  */
+  function setOneModule(module, magnitude) {
+    let input = ['0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0'];
+    input[module] = magnitude;
+    return [input.join('')];
+  }
+
+  /**
+   * Create wave sequence
+   *
    * @param mode reverse or direct
    * @param magnitude value per module
-  */
+   */
   function generateWaveInput(mode, magnitude) {
     let input = [];
     if (mode === 'reverse') {
@@ -44,5 +56,5 @@ export function useInputGenerator() {
     return input;
   }
 
-  return { setAllModules, generateWaveInput };
+  return { setAllModules, generateWaveInput, setOneModule };
 }
