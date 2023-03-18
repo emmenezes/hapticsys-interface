@@ -16,5 +16,25 @@ export function useRequests() {
       .then((message) => console.log(message));
   }
 
-  return { sendInput };
+  function saveInput(title, input, period = 0.1) {
+    fetch('/saveinput', {
+      method: 'POST',
+      body: JSON.stringify({
+        title: title,
+        period: period,
+        input: input,
+      }),
+      headers: default_header,
+    })
+      .then((response) => response.json())
+      .then((message) => console.log(message));
+  }
+
+  function listLibrary() {
+    fetch('/listlibrary')
+      .then((response) => response.json())
+      .then((message) => console.log(message));
+  }
+
+  return { sendInput, saveInput, listLibrary };
 }
