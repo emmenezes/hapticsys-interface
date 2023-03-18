@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  Container,
-  Divider,
-  Flex,
-  Heading,
-} from '@chakra-ui/react';
+import { Button, Container, Divider, Flex, Heading } from '@chakra-ui/react';
 
 import ButtonsTab from '../components/ButtonsTab';
 import CustomInputTab from '../components/CustomInputTab';
@@ -16,10 +11,12 @@ function Home() {
       <Heading textAlign="center" p={7} size="xl">
         Página de testes
       </Heading>
-      <Link to='/editor'>Editor</Link>
+      <Button>
+        <Link to="/editor">Editor</Link>
+      </Button>
       <Flex h="100vh" direction="row">
         <ButtonsTab />
-        <Divider orientation='vertical' />
+        <Divider orientation="vertical" />
         <CustomInputTab />
       </Flex>
     </Container>
