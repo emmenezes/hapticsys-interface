@@ -16,32 +16,20 @@ import {
   Th,
   Table,
   Td,
-  defineStyle,
-  createMultiStyleConfigHelpers,
 } from '@chakra-ui/react';
-import { numberInputAnatomy } from '@chakra-ui/anatomy';
 
 import { useRequests } from '../services/useRequests';
+import { useEditorContext } from '../context/EditorContext';
+import SaveInputModal from '../components/SaveInputModal';
 
 const RST_INPUT = [[], [], [], [], [], [], [], [], [], [], [], []];
 const range = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
 function Editor() {
-  const { sendInput, saveInput, listLibrary } = useRequests();
-  const { definePartsStyle, defineMultiStyleConfig } =
-    createMultiStyleConfigHelpers();
+  const { sendInput, listLibrary } = useRequests();
+  const { setPeriod, setInput, setIsSaveInputModalOpen } = useEditorContext();
 
   const [lines, setLines] = useState(RST_INPUT);
-
-  const vsm = defineStyle({
-    fontSize: 'sm',
-    h: '20',
-    px: '2',
-  });
-
-  const sizes = {
-    vsm: definePartsStyle({ field: vsm, stepper: vsm, addon: vsm }),
-  };
 
   function addColumns() {
     const updatedLines = lines.map((line) => {
@@ -84,11 +72,14 @@ function Editor() {
       }
       return sequence;
     });
-    saveInput('tst1', input, 0.5);
+    setInput(input);
+    setPeriod(0.5);
+    setIsSaveInputModalOpen(true);
   }
 
   return (
     <Container p={0} maxW="container.xl">
+      <SaveInputModal />
       <VStack>
         <HStack>
           <Button onClick={addColumns}>Adicionar colunas</Button>
@@ -122,7 +113,7 @@ function Editor() {
                         onChange={(newValue) =>
                           updateModule(indexLine, indexColumn, newValue)
                         }
-                        size="vsm"
+                        size="sm"
                       >
                         <NumberInputField />
                         <NumberInputStepper>
