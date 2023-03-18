@@ -11,10 +11,10 @@
 * Onda inversa: executa onda da esquerda para a direita
 * Onda com parâmetros: permite definir maginituded máxima e período
 * Entrada personalizada: seta um determinado módulo 
+* Editor de padrões: aceita uma sequência, título e período
 
 ### Funcionalidades em implementação
 
-* Editor de padrões
 
 ### Funcionalidades para implementar
 

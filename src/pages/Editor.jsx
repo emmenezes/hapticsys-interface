@@ -16,6 +16,7 @@ import {
   Th,
   Table,
   Td,
+  FormLabel,
 } from '@chakra-ui/react';
 
 import { useRequests } from '../services/useRequests';
@@ -81,13 +82,25 @@ function Editor() {
     <Container p={0} maxW="container.xl">
       <SaveInputModal />
       <VStack>
-        <HStack>
+        <HStack w="100%" justifyContent="center">
           <Button onClick={addColumns}>Adicionar colunas</Button>
           <Button onClick={deleteColumns}>Deletar colunas</Button>
-          <Button onClick={() => console.log(lines)}>Checar</Button>
           <Button onClick={setCustomSequence}>Enviar</Button>
           <Button onClick={saveCustomSequence}>Salvar</Button>
           <Button onClick={listLibrary}>Listar Biblioteca</Button>
+          <FormLabel>Periodo</FormLabel>
+          <NumberInput
+            w="100px"
+            min={0.01}
+            defaultValue={0.01}
+            onChange={setPeriod}
+          >
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
         </HStack>
         <TableContainer w="100%" paddingX={10} justifyContent="flex-start">
           <Table size="sm">
