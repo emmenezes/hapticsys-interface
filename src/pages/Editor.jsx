@@ -28,7 +28,8 @@ const range = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
 function Editor() {
   const { sendInput, listLibrary } = useRequests();
-  const { setPeriod, setInput, setIsSaveInputModalOpen } = useEditorContext();
+  const { setPeriod, period, setInput, setIsSaveInputModalOpen } =
+    useEditorContext();
 
   const [lines, setLines] = useState(RST_INPUT);
 
@@ -62,7 +63,7 @@ function Editor() {
       }
       return sequence;
     });
-    sendInput('tst1', input, 0.5);
+    sendInput(input, +(period));
   }
 
   function saveCustomSequence() {
