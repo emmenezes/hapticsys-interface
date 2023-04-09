@@ -1,11 +1,13 @@
 import React from 'react';
-import { Container } from '@chakra-ui/react';
+import { VStack } from '@chakra-ui/react';
+
+import { Header } from '../components/Header';
 
 function Library() {
   return (
-    <Container>
-
-    </Container>
+    <VStack>
+      <Header actualPage='Biblioteca' />
+    </VStack>
   )
 }
 
