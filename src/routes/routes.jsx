@@ -3,6 +3,7 @@ import { Route, BrowserRouter, Routes } from 'react-router-dom';
 
 import Home from '../pages/Home';
 import Editor from '../pages/Editor';
+import Library from '../pages/Library';
 import { EditorProvider } from '../context/EditorContext';
 
 function Router() {
@@ -19,6 +20,7 @@ function Router() {
           path="/editor"
           exact
         />
+        <Route element={<Library />} path="/library" exact />
       </Routes>
     </BrowserRouter>
   );

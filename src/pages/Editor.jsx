@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Button,
-  Container,
   HStack,
   VStack,
   NumberInput,
@@ -19,9 +18,11 @@ import {
   FormLabel,
 } from '@chakra-ui/react';
 
-import { useRequests } from '../services/useRequests';
+import { SaveInputModal } from '../components/SaveInputModal';
+import { Header } from '../components/Header';
+
 import { useEditorContext } from '../context/EditorContext';
-import SaveInputModal from '../components/SaveInputModal';
+import { useRequests } from '../services/useRequests';
 
 const RST_INPUT = [[], [], [], [], [], [], [], [], [], [], [], []];
 const range = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
@@ -63,7 +64,7 @@ function Editor() {
       }
       return sequence;
     });
-    sendInput(input, +(period));
+    sendInput(input, +period);
   }
 
   function saveCustomSequence() {
@@ -80,7 +81,8 @@ function Editor() {
   }
 
   return (
-    <Container p={0} maxW="container.xl">
+    <VStack>
+      <Header actualPage="Editor" />
       <SaveInputModal />
       <VStack>
         <HStack w="100%" justifyContent="center">
@@ -143,7 +145,7 @@ function Editor() {
           </Table>
         </TableContainer>
       </VStack>
-    </Container>
+    </VStack>
   );
 }
 

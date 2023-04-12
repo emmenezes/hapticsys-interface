@@ -16,7 +16,7 @@ import {
 import { useEditorContext } from '../context/EditorContext';
 import { useRequests } from '../services/useRequests';
 
-function SaveInputModal() {
+export function SaveInputModal() {
   const {
     title,
     setTitle,
@@ -64,5 +64,3 @@ function SaveInputModal() {
     </Modal>
   );
 }
-
-export default SaveInputModal;
