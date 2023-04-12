@@ -15,7 +15,7 @@ export function Header({ actualPage }) {
       <HStack spacing={10}>
         {Pages.map((page) => {
           if (actualPage === page.title) return <Link color='blue.400' as='i' >{page.title}</Link>;
-          return <Link href={page.link}>{page.title}</Link>;
+          return <Link href={page.link} key={page.title}>{page.title}</Link>;
         })}
         <Button onClick={toggleColorMode} w={220}>
           Mudar para modo {colorMode === 'light' ? 'escuro' : 'claro'}
