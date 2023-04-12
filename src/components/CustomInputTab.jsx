@@ -30,13 +30,12 @@ function CustomInputTab() {
 
   return (
     <VStack w="full" p={10}>
-      -
-      <Heading size="lg" mb={3}>
+      <Heading as="h2" size="lg" mb={3}>
         Entrada personalizada
       </Heading>
-      <HStack w="full" justifyContent="center">
+      <VStack w="40%" justifyContent="space-between" >
         <FormControl>
-          <HStack>
+          <HStack justifyContent="space-between" >
             <FormLabel>Módulo</FormLabel>
             <NumberInput
               w="100px"
@@ -54,7 +53,7 @@ function CustomInputTab() {
           </HStack>
         </FormControl>
         <FormControl>
-          <HStack>
+          <HStack justifyContent="space-between">
             <FormLabel>Intensidade</FormLabel>
             <NumberInput
               w="100px"
@@ -74,8 +73,8 @@ function CustomInputTab() {
         <Button onClick={setCustomInput} size="lg">
           Enviar
         </Button>
-      </HStack>
-      <Image p={10} src="location.png" />
+      </VStack>
+      <Image p={5} src="location.png" />
     </VStack>
   );
 }
