@@ -33,8 +33,22 @@ export function useRequests() {
   function listLibrary() {
     fetch('/listlibrary')
       .then((response) => response.json())
+      .then((message) => {
+        return message.message;
+      });
+  }
+
+  function libraryInput(id) {
+    fetch('/libraryinput', {
+      method: 'POST',
+      body: JSON.stringify({
+        id: id,
+      }),
+      headers: default_header,
+    })
+      .then((response) => response.json())
       .then((message) => console.log(message));
   }
 
-  return { sendInput, saveInput, listLibrary };
+  return { sendInput, saveInput, listLibrary, libraryInput };
 }

@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   Button,
-  Container,
   HStack,
   VStack,
   NumberInput,
@@ -16,32 +15,24 @@ import {
   Th,
   Table,
   Td,
-  defineStyle,
-  createMultiStyleConfigHelpers,
+  FormLabel,
 } from '@chakra-ui/react';
-import { numberInputAnatomy } from '@chakra-ui/anatomy';
 
+import { SaveInputModal } from '../components/SaveInputModal';
+import { Header } from '../components/Header';
+
+import { useEditorContext } from '../context/EditorContext';
 import { useRequests } from '../services/useRequests';
 
 const RST_INPUT = [[], [], [], [], [], [], [], [], [], [], [], []];
 const range = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
 function Editor() {
-  const { sendInput, saveInput, listLibrary } = useRequests();
-  const { definePartsStyle, defineMultiStyleConfig } =
-    createMultiStyleConfigHelpers();
+  const { sendInput, listLibrary } = useRequests();
+  const { setPeriod, period, setInput, setIsSaveInputModalOpen } =
+    useEditorContext();
 
   const [lines, setLines] = useState(RST_INPUT);
-
-  const vsm = defineStyle({
-    fontSize: 'sm',
-    h: '20',
-    px: '2',
-  });
-
-  const sizes = {
-    vsm: definePartsStyle({ field: vsm, stepper: vsm, addon: vsm }),
-  };
 
   function addColumns() {
     const updatedLines = lines.map((line) => {
@@ -73,7 +64,7 @@ function Editor() {
       }
       return sequence;
     });
-    sendInput('tst1', input, 0.5);
+    sendInput(input, +period);
   }
 
   function saveCustomSequence() {
@@ -84,19 +75,35 @@ function Editor() {
       }
       return sequence;
     });
-    saveInput('tst1', input, 0.5);
+    setInput(input);
+    setPeriod(0.5);
+    setIsSaveInputModalOpen(true);
   }
 
   return (
-    <Container p={0} maxW="container.xl">
+    <VStack>
+      <Header actualPage="Editor" />
+      <SaveInputModal />
       <VStack>
-        <HStack>
+        <HStack w="100%" justifyContent="center">
           <Button onClick={addColumns}>Adicionar colunas</Button>
           <Button onClick={deleteColumns}>Deletar colunas</Button>
-          <Button onClick={() => console.log(lines)}>Checar</Button>
           <Button onClick={setCustomSequence}>Enviar</Button>
           <Button onClick={saveCustomSequence}>Salvar</Button>
           <Button onClick={listLibrary}>Listar Biblioteca</Button>
+          <FormLabel>Periodo</FormLabel>
+          <NumberInput
+            w="100px"
+            min={0.01}
+            defaultValue={0.01}
+            onChange={setPeriod}
+          >
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
         </HStack>
         <TableContainer w="100%" paddingX={10} justifyContent="flex-start">
           <Table size="sm">
@@ -122,7 +129,7 @@ function Editor() {
                         onChange={(newValue) =>
                           updateModule(indexLine, indexColumn, newValue)
                         }
-                        size="vsm"
+                        size="sm"
                       >
                         <NumberInputField />
                         <NumberInputStepper>
@@ -138,7 +145,7 @@ function Editor() {
           </Table>
         </TableContainer>
       </VStack>
-    </Container>
+    </VStack>
   );
 }
 
