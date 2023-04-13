@@ -16,7 +16,9 @@ import {
   Table,
   Td,
   FormLabel,
+  IconButton,
 } from '@chakra-ui/react';
+import { CopyIcon, DeleteIcon } from '@chakra-ui/icons';
 
 import { SaveInputModal } from '../components/SaveInputModal';
 import { Header } from '../components/Header';
@@ -41,10 +43,26 @@ function Editor() {
     setLines(updatedLines);
   }
 
+  function duplicateColumn(id) {
+    const updatedLines = lines.map((line) => {
+      return [...line, line[id]];
+    });
+    setLines(updatedLines);
+  }
+
   function deleteColumns() {
     const updatedLines = lines.map((line) => {
       let updatedLine = [...line];
       updatedLine.pop();
+      return updatedLine;
+    });
+    setLines(updatedLines);
+  }
+
+  function deleteColumn(id) {
+    const updatedLines = lines.map((line) => {
+      let updatedLine = [...line];
+      updatedLine.splice(id, 1);
       return updatedLine;
     });
     setLines(updatedLines);
@@ -94,8 +112,9 @@ function Editor() {
           <FormLabel>Periodo</FormLabel>
           <NumberInput
             w="100px"
-            min={0.01}
-            defaultValue={0.01}
+            min={0.1}
+            step={0.1}
+            defaultValue={0.1}
             onChange={setPeriod}
           >
             <NumberInputField />
@@ -111,7 +130,21 @@ function Editor() {
               <Tr>
                 <Th>Mod</Th>
                 {lines[0].map((_, index) => (
-                  <Th>T {index}</Th>
+                  <Th>
+                    T {index}{'   '}
+                    <IconButton
+                      aria-label="Duplicar coluna"
+                      onClick={() => duplicateColumn(index)}
+                      icon={<CopyIcon />}
+                      size='sm'
+                    />{'   '}
+                    <IconButton
+                      aria-label="Deletar coluna"
+                      onClick={() => deleteColumn(index)}
+                      icon={<DeleteIcon />}
+                      size='sm'
+                    />
+                  </Th>
                 ))}
               </Tr>
             </Thead>
@@ -123,9 +156,9 @@ function Editor() {
                     <Td>
                       <NumberInput
                         w="100px"
-                        max={11}
+                        max={7}
                         min={0}
-                        defaultValue={value}
+                        value={value}
                         onChange={(newValue) =>
                           updateModule(indexLine, indexColumn, newValue)
                         }
