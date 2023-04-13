@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Select, VStack } from '@chakra-ui/react';
 
 import { Header } from '../components/Header';
@@ -6,7 +6,7 @@ import { Header } from '../components/Header';
 import { useRequests } from '../services/useRequests';
 
 function Library() {
-  const { listLibrary, libraryInput }  = useRequests();
+  const { libraryInput }  = useRequests();
   const [selectedInput, setSelectedInput] = useState();
   const [library, setLibrary] = useState([]);
 
@@ -36,7 +36,7 @@ function Library() {
     <VStack>
       <Header actualPage='Biblioteca' />
       <VStack>
-        <Button onClick={handleOnClick} >Atualizar biblioteca</Button>
+        <Button onClick={handleOnClick}>Atualizar biblioteca</Button>
         <Select placeholder='Selecione uma sequência para executar' onChange={(e) => setSelectedInput(e.target.value)}>
           {library.map((element) => {
             return <option value={element.id} key={element.id}>{element.title}</option>
