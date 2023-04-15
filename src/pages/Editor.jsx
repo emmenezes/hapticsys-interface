@@ -116,6 +116,7 @@ function Editor() {
             step={0.1}
             defaultValue={0.1}
             onChange={setPeriod}
+            siz='xs'
           >
             <NumberInputField />
             <NumberInputStepper>
@@ -162,7 +163,7 @@ function Editor() {
                         onChange={(newValue) =>
                           updateModule(indexLine, indexColumn, newValue)
                         }
-                        size="sm"
+                        size="xs"
                       >
                         <NumberInputField />
                         <NumberInputStepper>
