@@ -14,7 +14,7 @@ export function Header({ actualPage }) {
       <Heading as="h1">Sistema Háptico</Heading>
       <HStack spacing={10}>
         {Pages.map((page) => {
-          if (actualPage === page.title) return <Link color='blue.400' as='i' >{page.title}</Link>;
+          if (actualPage === page.title) return <Link color='blue.400' as='i' key={page.title} >{page.title}</Link>;
           return <Link href={page.link} key={page.title}>{page.title}</Link>;
         })}
         <Button onClick={toggleColorMode} w={220}>

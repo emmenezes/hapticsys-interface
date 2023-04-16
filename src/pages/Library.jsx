@@ -1,51 +1,41 @@
-import React, { useState } from 'react';
-import { Button, Select, VStack } from '@chakra-ui/react';
+import React from 'react';
+import { Button, Heading, Select, VStack } from '@chakra-ui/react';
 
 import { Header } from '../components/Header';
 
 import { useRequests } from '../services/useRequests';
+import { useLibraryContext } from '../context/LibraryContext';
 
 function Library() {
-  const { libraryInput }  = useRequests();
-  const [selectedInput, setSelectedInput] = useState();
-  const [library, setLibrary] = useState([]);
-
-  const handleOnClick = async () => {
-    try {
-      const response = await fetch('/listlibrary');
-
-      if (!response.ok) {
-        console.log('erro')
-      }
-
-      const result = await response.json();
-
-      setLibrary(result.message)
-    } catch (err) {
-      console.log('err', err)
-    } 
-  }
-
-  console.log(selectedInput);
+  const { libraryInput } = useRequests();
+  const { selectedInput, setSelectedInput, library } = useLibraryContext();
 
   function sendInput() {
     libraryInput(selectedInput);
   }
-  
+
   return (
     <VStack>
-      <Header actualPage='Biblioteca' />
+      <Header actualPage="Biblioteca" />
       <VStack>
-        <Button onClick={handleOnClick}>Atualizar biblioteca</Button>
-        <Select placeholder='Selecione uma sequência para executar' onChange={(e) => setSelectedInput(e.target.value)}>
+        <Heading>Selecione uma sequência para executar</Heading>
+        <Select
+          placeholder="Sequências"
+          onChange={(e) => setSelectedInput(e.target.value)}
+          w={200}
+        >
           {library.map((element) => {
-            return <option value={element.id} key={element.id}>{element.title}</option>
+            return (
+              <option value={element.id} key={element.id}>
+                {element.title}
+              </option>
+            );
           })}
         </Select>
         <Button onClick={sendInput}>Executar sequência</Button>
       </VStack>
     </VStack>
-  )
+  );
 }
 
 export default Library;

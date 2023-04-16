@@ -5,6 +5,7 @@ import Home from '../pages/Home';
 import Editor from '../pages/Editor';
 import Library from '../pages/Library';
 import { EditorProvider } from '../context/EditorContext';
+import { LibraryProvider } from '../context/LibraryContext';
 
 function Router() {
   return (
@@ -20,7 +21,15 @@ function Router() {
           path="/editor"
           exact
         />
-        <Route element={<Library />} path="/library" exact />
+        <Route
+          element={
+            <LibraryProvider>
+              <Library />
+            </LibraryProvider>
+          }
+          path="/library"
+          exact
+        />
       </Routes>
     </BrowserRouter>
   );
