@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Button,
   HStack,
@@ -16,57 +16,28 @@ import {
   Table,
   Td,
   FormLabel,
-  IconButton,
 } from '@chakra-ui/react';
-import { CopyIcon, DeleteIcon } from '@chakra-ui/icons';
 
 import { SaveInputModal } from '../components/SaveInputModal';
 import { Header } from '../components/Header';
+import { MenuColumn } from '../components/MenuColumn';
 
 import { useEditorContext } from '../context/EditorContext';
 import { useRequests } from '../services/useRequests';
 
-const RST_INPUT = [[], [], [], [], [], [], [], [], [], [], [], []];
 const range = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
 function Editor() {
   const { sendInput, listLibrary } = useRequests();
-  const { setPeriod, period, setInput, setIsSaveInputModalOpen } =
-    useEditorContext();
-
-  const [lines, setLines] = useState(RST_INPUT);
-
-  function addColumns() {
-    const updatedLines = lines.map((line) => {
-      return [...line, '0'];
-    });
-    setLines(updatedLines);
-  }
-
-  function duplicateColumn(id) {
-    const updatedLines = lines.map((line) => {
-      return [...line, line[id]];
-    });
-    setLines(updatedLines);
-  }
-
-  function deleteColumns() {
-    const updatedLines = lines.map((line) => {
-      let updatedLine = [...line];
-      updatedLine.pop();
-      return updatedLine;
-    });
-    setLines(updatedLines);
-  }
-
-  function deleteColumn(id) {
-    const updatedLines = lines.map((line) => {
-      let updatedLine = [...line];
-      updatedLine.splice(id, 1);
-      return updatedLine;
-    });
-    setLines(updatedLines);
-  }
+  const {
+    setPeriod,
+    period,
+    setInput,
+    setIsSaveInputModalOpen,
+    lines,
+    setLines,
+    addColumn,
+  } = useEditorContext();
 
   function updateModule(indexLine, indexColumn, value) {
     let newLines = [...lines];
@@ -104,8 +75,7 @@ function Editor() {
       <SaveInputModal />
       <VStack>
         <HStack w="100%" justifyContent="center">
-          <Button onClick={addColumns}>Adicionar colunas</Button>
-          <Button onClick={deleteColumns}>Deletar colunas</Button>
+          <Button onClick={addColumn}>Adicionar colunas</Button>
           <Button onClick={setCustomSequence}>Enviar</Button>
           <Button onClick={saveCustomSequence}>Salvar</Button>
           <Button onClick={listLibrary}>Listar Biblioteca</Button>
@@ -116,7 +86,7 @@ function Editor() {
             step={0.1}
             defaultValue={0.1}
             onChange={setPeriod}
-            siz='xs'
+            siz="xs"
           >
             <NumberInputField />
             <NumberInputStepper>
@@ -131,20 +101,9 @@ function Editor() {
               <Tr>
                 <Th>Mod</Th>
                 {lines[0].map((_, index) => (
-                  <Th>
+                  <Th key={index}>
                     T {index}{'   '}
-                    <IconButton
-                      aria-label="Duplicar coluna"
-                      onClick={() => duplicateColumn(index)}
-                      icon={<CopyIcon />}
-                      size='sm'
-                    />{'   '}
-                    <IconButton
-                      aria-label="Deletar coluna"
-                      onClick={() => deleteColumn(index)}
-                      icon={<DeleteIcon />}
-                      size='sm'
-                    />
+                    <MenuColumn index={index} />
                   </Th>
                 ))}
               </Tr>
