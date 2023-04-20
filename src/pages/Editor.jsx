@@ -8,7 +8,6 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
-  TableContainer,
   Thead,
   Tbody,
   Tr,
@@ -16,6 +15,7 @@ import {
   Table,
   Td,
   FormLabel,
+  Box,
 } from '@chakra-ui/react';
 
 import { SaveInputModal } from '../components/SaveInputModal';
@@ -73,7 +73,7 @@ function Editor() {
     <VStack>
       <Header actualPage="Editor" />
       <SaveInputModal />
-      <VStack>
+      <VStack w="100%">
         <HStack w="100%" justifyContent="center">
           <Button onClick={addColumn}>Adicionar colunas</Button>
           <Button onClick={setCustomSequence}>Enviar</Button>
@@ -95,14 +95,15 @@ function Editor() {
             </NumberInputStepper>
           </NumberInput>
         </HStack>
-        <TableContainer w="100%" paddingX={10} justifyContent="flex-start">
+        <Box overflowY="auto" maxWidth="95%">
           <Table size="sm">
             <Thead>
               <Tr>
                 <Th>Mod</Th>
                 {lines[0].map((_, index) => (
                   <Th key={index}>
-                    T {index}{'   '}
+                    T {index}
+                    {'   '}
                     <MenuColumn index={index} />
                   </Th>
                 ))}
@@ -111,7 +112,7 @@ function Editor() {
             <Tbody>
               {range.map((indexLine) => (
                 <Tr>
-                  <Td>Mod {indexLine}</Td>
+                  <Td>M{indexLine}</Td>
                   {lines[indexLine].map((value, indexColumn) => (
                     <Td>
                       <NumberInput
@@ -136,7 +137,7 @@ function Editor() {
               ))}
             </Tbody>
           </Table>
-        </TableContainer>
+        </Box>
       </VStack>
     </VStack>
   );
