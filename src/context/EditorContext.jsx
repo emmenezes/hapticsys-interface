@@ -6,9 +6,13 @@ const initialState = {
   input: [],
 };
 
-export const EditorContext = createContext(initialState);
-
 const RST_INPUT = [[], [], [], [], [], [], [], [], [], [], [], []];
+
+const default_header = {
+  'Content-type': 'application/json; charset=UTF-8',
+};
+
+export const EditorContext = createContext(initialState);
 
 export function EditorProvider({ children }) {
   const [title, setTitle] = useState('');
@@ -66,6 +70,32 @@ export function EditorProvider({ children }) {
     setLines(updatedLines);
   }
 
+  function editSequence(id) {
+    const fetchData = async () => {
+      const data = await fetch('/getinput', {
+        method: 'POST',
+        body: JSON.stringify({
+          id: id,
+        }),
+        headers: default_header,
+      });
+      const json = await data.json();
+      
+      const updatedLines = JSON.parse(JSON.stringify(RST_INPUT));
+      console.log('up1', updatedLines);
+      for (let i = 0; i < json.input.length; i++) {
+        const seq = json.input[i];
+        for (let j = 0; j < 12; j++) {
+          updatedLines[j].push(seq[j]);
+        }
+      }
+      setLines(updatedLines);
+      console.log('up2', updatedLines);
+    };
+
+    fetchData().catch(console.error);
+  }
+
   const contextValue = {
     title,
     setTitle,
@@ -81,6 +111,7 @@ export function EditorProvider({ children }) {
     deleteColumn,
     duplicateColumn,
     moveColumn,
+    editSequence,
   };
 
   return (
