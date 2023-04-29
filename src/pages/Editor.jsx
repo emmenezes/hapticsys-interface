@@ -41,6 +41,7 @@ function Editor() {
     lines,
     setLines,
     addColumn,
+    cleanLines
   } = useEditorContext();
 
   function updateModule(indexLine, indexColumn, value) {
@@ -88,6 +89,7 @@ function Editor() {
           <Button onClick={setCustomSequence}>Enviar</Button>
           <Button onClick={saveCustomSequence}>Salvar</Button>
           <Button onClick={listLibrarySequences}>Editar sequência salva</Button>
+          <Button onClick={cleanLines}>Limpar</Button>
           <FormLabel>Periodo</FormLabel>
           <NumberInput
             w="100px"
