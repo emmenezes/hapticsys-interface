@@ -5,6 +5,7 @@ import {
   MenuButton,
   MenuList,
   MenuItem,
+  useDisclosure,
 } from '@chakra-ui/react';
 import {
   CopyIcon,
@@ -18,9 +19,12 @@ import { useEditorContext } from '../context/EditorContext';
 
 export function MenuColumn({ index }) {
   const { deleteColumn, duplicateColumn, moveColumn } = useEditorContext();
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
-    <Menu>
+    <Menu isOpen={isOpen} onClose={onClose}>
       <MenuButton
+        onMouseOver={onOpen}
         as={IconButton}
         aria-label="Opções"
         icon={<HamburgerIcon />}

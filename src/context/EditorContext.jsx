@@ -70,6 +70,10 @@ export function EditorProvider({ children }) {
     setLines(updatedLines);
   }
 
+  function cleanLines() {
+    setLines(RST_INPUT);
+  }
+
   function editSequence(id) {
     const fetchData = async () => {
       const data = await fetch('/getinput', {
@@ -110,6 +114,7 @@ export function EditorProvider({ children }) {
     duplicateColumn,
     moveColumn,
     editSequence,
+    cleanLines
   };
 
   return (
