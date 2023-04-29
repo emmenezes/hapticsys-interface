@@ -30,7 +30,10 @@ export function SaveInputModal() {
   const isError = title === '';
 
   return (
-    <Modal isOpen={isSaveInputModalOpen}>
+    <Modal
+      isOpen={isSaveInputModalOpen}
+      onClose={() => setIsSaveInputModalOpen(false)}
+    >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Salvar sequência</ModalHeader>
@@ -52,7 +55,7 @@ export function SaveInputModal() {
             }}
             isDisabled={isError}
             mr={3}
-            colorScheme='blue'
+            colorScheme="blue"
           >
             Salvar
           </Button>

@@ -18,17 +18,21 @@ import {
   Box,
 } from '@chakra-ui/react';
 
-import { SaveInputModal } from '../components/SaveInputModal';
 import { Header } from '../components/Header';
 import { MenuColumn } from '../components/MenuColumn';
+import { SaveInputModal } from '../components/SaveInputModal';
+import { ListLibraryModal } from '../components/ListLibraryModal';
 
-import { useEditorContext } from '../context/EditorContext';
 import { useRequests } from '../services/useRequests';
+import { useEditorContext } from '../context/EditorContext';
+import { useModalEditorContext } from '../context/ModalEditorContext';
 
 const range = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
 function Editor() {
-  const { sendInput, listLibrary } = useRequests();
+  const { sendInput } = useRequests();
+  const { setIsListLibraryModalOpen, isListLibraryModalOpen } =
+    useModalEditorContext();
   const {
     setPeriod,
     period,
@@ -65,24 +69,29 @@ function Editor() {
       return sequence;
     });
     setInput(input);
-    setPeriod(0.5);
+    setPeriod(period);
     setIsSaveInputModalOpen(true);
+  }
+
+  function listLibrarySequences() {
+    setIsListLibraryModalOpen(true);
   }
 
   return (
     <VStack>
       <Header actualPage="Editor" />
       <SaveInputModal />
+      <ListLibraryModal />
       <VStack w="100%">
         <HStack w="100%" justifyContent="center">
           <Button onClick={addColumn}>Adicionar colunas</Button>
           <Button onClick={setCustomSequence}>Enviar</Button>
           <Button onClick={saveCustomSequence}>Salvar</Button>
-          <Button onClick={listLibrary}>Listar Biblioteca</Button>
+          <Button onClick={listLibrarySequences}>Editar sequência salva</Button>
           <FormLabel>Periodo</FormLabel>
           <NumberInput
             w="100px"
-            min={0.1}
+            min={0.01}
             step={0.1}
             defaultValue={0.1}
             onChange={setPeriod}
