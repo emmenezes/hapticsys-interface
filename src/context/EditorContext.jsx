@@ -82,7 +82,6 @@ export function EditorProvider({ children }) {
       const json = await data.json();
       
       const updatedLines = JSON.parse(JSON.stringify(RST_INPUT));
-      console.log('up1', updatedLines);
       for (let i = 0; i < json.input.length; i++) {
         const seq = json.input[i];
         for (let j = 0; j < 12; j++) {
@@ -90,7 +89,6 @@ export function EditorProvider({ children }) {
         }
       }
       setLines(updatedLines);
-      console.log('up2', updatedLines);
     };
 
     fetchData().catch(console.error);
